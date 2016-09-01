@@ -3,20 +3,16 @@ package com.search.www.action;
 import com.search.www.util.Constance;
 import com.search.www.util.HttpClientUtil;
 import com.search.www.util.HttpRequestUtil;
-import com.search.www.util.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 /**
  * Created by yandeke on 2016/7/31.
