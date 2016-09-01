@@ -1,14 +1,23 @@
 package com.search.www.action;
 
-import com.search.www.util.CookieUtil;
+import com.search.www.util.Constance;
+import com.search.www.util.HttpClientUtil;
+import com.search.www.util.HttpRequestUtil;
+import com.search.www.util.JsonUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
+
 /**
  * Created by yandeke on 2016/7/31.
  */
@@ -16,15 +25,21 @@ import javax.servlet.http.HttpSession;
 public class IndexController extends BaseController
 {
     Logger logger = Logger.getLogger(IndexController.class);
-
     @RequestMapping(value="index")
     public String toLogin(HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap modelMap){
-    /*    session.removeAttribute("username");// 清除session中的对象
-        try {
-            CookieUtil.clearCookie(request, response);//清除客户端cookie
-        } catch (Exception e) {
-            logger.error("清除cookie失败" +e.getMessage());
-        }*/
-        return "/index";
+        return "index";
+    }
+
+    @RequestMapping("searchContent")
+    @ResponseBody
+    public void searchContent(HttpServletRequest request, HttpServletResponse response,ModelMap model){
+        String keyWords = HttpRequestUtil.getStringParames(request,"keyWords",null);
+        if(StringUtils.isNotEmpty(keyWords)){
+            String str = HttpClientUtil.getForm(Constance.BAIDU_URL+keyWords);
+            System.out.println(str);
+            String str2 = HttpClientUtil.getForm(Constance.GUGE_URL+keyWords);
+            System.out.println(str2);
+        }
+//        JsonUtil.jsonResponse();
     }
 }

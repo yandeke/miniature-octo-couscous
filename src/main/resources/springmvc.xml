@@ -1,0 +1,98 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:cache="http://www.springframework.org/schema/cache"
+	   xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:jee="http://www.springframework.org/schema/jee"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+						http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+						http://www.springframework.org/schema/cache
+						http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+	<!-- 开启springmvc的注解支持 -->
+	<mvc:annotation-driven />
+	<context:component-scan base-package="com.search.www" />
+	<context:property-placeholder location="classpath:wxzone-config.properties"/>
+	<!-- 将多个配置文件位置放到列表中 -->
+	<!--<bean id="propertyResources" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<value>classpath:wxzone-config.properties</value>
+				<value>file:/opt/config/wxzone-config.properties</value>
+			</list>
+		</constructor-arg>
+	</bean>-->
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+
+	<!-- spring mvc对静态资源的访问 -->
+	<mvc:resources mapping="/theme/**" location="/theme/" />
+
+	<!-- 数据源配置 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		  destroy-method="close">
+		<property name="driverClassName" value="${dataSource.driverClassName}" />
+		<property name="url" value="${dataSource.url}" />
+		<property name="username" value="${dataSource.username}" />
+		<property name="password" value="${dataSource.password}" />
+
+		<property name="initialSize" value="${dataSource.initialSize}" />
+		<property name="maxActive" value="${dataSource.maxActive}" />
+		<property name="maxIdle" value="${dataSource.maxIdle}" />
+		<property name="minIdle" value="${dataSource.minIdle}" />
+		<property name="maxWait" value="5000" />
+
+		<property name="timeBetweenEvictionRunsMillis" value="300000" />
+		<property name="removeAbandoned" value="true" />
+		<property name="validationQuery" value="select 1" />
+	</bean>
+
+	<!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath:sqlMap/*Mapper.xml" />
+	</bean>-->
+
+	<!-- 将mybatis映射的mapper进行自动扫描，并且加入到spring的容器中 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!--可用,或者;分割多个扫描的包-->
+		<property name="basePackage" value="com.wxzone.www.dao" />
+	</bean>
+
+	<!-- 基于注解的事务配置 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+<!--
+	&lt;!&ndash; 文件上传相关 &ndash;&gt;
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"/>
+		&lt;!&ndash; 最大内存大小 &ndash;&gt;
+		<property name="maxInMemorySize" value="10240"/>
+		&lt;!&ndash; 最大文件大小，-1为不限制大小 &ndash;&gt;
+		<property name="maxUploadSize" value="-1"/>
+	</bean>
+	
+	&lt;!&ndash; 缓存配置 &ndash;&gt;
+    &lt;!&ndash; 启用缓存注解功能(请将其配置在Spring主配置文件中) &ndash;&gt;
+    <cache:annotation-driven cache-manager="cacheManager"/>
+
+    &lt;!&ndash; 若只想使用Spring自身提供的缓存器,则注释掉下面的两个关于Ehcache配置的bean,并启用上面的SimpleCacheManager即可 &ndash;&gt;
+    &lt;!&ndash; Spring提供的基于的Ehcache实现的缓存管理器 &ndash;&gt;
+    <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache.xml"/>
+    </bean>
+	
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="cacheManagerFactory"/>
+    </bean>-->
+</beans>

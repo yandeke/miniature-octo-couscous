@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="lazyLoadingEnabled" value="false"/>
+        <setting name="logImpl" value="LOG4J"/>
+	</settings>
+
+
+
+   <!-- <plugins>
+        <plugin interceptor="com.etiantian.weixin.page.PageHelper">
+            <property name="dialect" value="oracle"/>
+        </plugin>
+    </plugins>-->
+
+
+
+	<mappers>
+
+        <!--<mapper resource="com/etiantian/weixin/dao/impl/CoursesInfoMapper.xml"/>
+        <mapper resource="com/etiantian/weixin/dao/impl/ResourceInfoMapper.xml"/>
+        <mapper resource="com/etiantian/weixin/dao/impl/AgArticleInfoMapper.xml"/>
+        <mapper resource="com/etiantian/weixin/dao/impl/AgScheduleMapper.xml"/>
+        <mapper resource="com/etiantian/weixin/dao/impl/ArcCommentInfoMapper.xml" />
+        <mapper resource="com/etiantian/weixin/dao/impl/CourseTypeMapper.xml" />
+        <mapper resource="com/etiantian/weixin/dao/impl/TolPaperInfoMapper.xml" />
+        <mapper resource="com/etiantian/weixin/dao/impl/TolQuestionInfoMapper.xml" />
+        <mapper resource="com/etiantian/weixin/dao/impl/TolAnswerInfoMapper.xml" />
+        <mapper resource="com/etiantian/weixin/dao/impl/TolJStuQuestionMapper.xml" />
+        <mapper resource="com/etiantian/weixin/dao/impl/OnlineCourseInfoMapper.xml"/>-->
+	</mappers>
+
+
+</configuration>
