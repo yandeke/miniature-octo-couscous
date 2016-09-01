@@ -35,6 +35,10 @@ public class IndexController extends BaseController
             System.out.println(str);
             String str2 = HttpClientUtil.getForm(Constance.GUGE_URL+keyWords);
             System.out.println(str2);
+
+            String url3 = Constance.URL_360+keyWords;
+            String str3 = HttpClientUtil.getForm(url3);
+            System.out.println(str3);
         }
 //        JsonUtil.jsonResponse();
     }
